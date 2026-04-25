@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RitmoCard</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f5f9ff;
+    color: #2c3e50;
+}
+
+/* HEADER */
+header {
+    background: white;
+    padding: 20px 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+header h2 {
+    margin: 0;
+    color: #4a6fa5;
+}
+
+/* HERO */
+.hero {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.hero p {
+    max-width: 600px;
+    margin: auto;
+    color: #7f8c8d;
+}
+
+/* GRID */
+.main {
+    display: grid;
+    gap: 30px;
+    padding: 30px;
+}
+
+@media(min-width: 900px){
+    .main {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* CARD */
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+}
+
+/* INPUT */
+.input-area {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.input-area img {
+    width: 80px;
+}
+
+input {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+button {
+    margin-top: 10px;
+    padding: 12px;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    background: #7ed6c2;
+    color: white;
+    cursor: pointer;
+}
+
+/* RESULT */
+.result {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.red { color: #e74c3c; }
+.green { color: #2ecc71; }
+
+/* GUIDE */
+.section { display: none; }
+
+.circle {
+    width: 100px;
+    height: 100px;
+    background: #7ed6c2;
+    border-radius: 50%;
+    margin: 20px auto;
+    transition: transform 4s ease-in-out;
+}
+
+.expand { transform: scale(1.5); }
+
+.ball {
+    width: 60px;
+    height: 60px;
+    background: #a29bfe;
+    border-radius: 50%;
+    margin: 15px auto;
+}
+
+.ball:active { transform: scale(0.7); }
+
+/* INFO */
+.info p {
+    line-height: 1.6;
+    color: #555;
+}
+
+/* TUTORIAL */
+.tutorial ol {
+    padding-left: 20px;
+}
+
+.tutorial li {
+    margin-bottom: 10px;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #aaa;
+    font-size: 14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>RitmoCard</h2>
+</header>
+
+<section class="hero">
+    <h1>Escucha tu corazón</h1>
+    <p>
+        Tu ritmo cardíaco cambia constantemente. Aprender a medirlo e interpretarlo
+        puede ayudarte a entender mejor tu cuerpo y tu nivel de estrés.
+    </p>
+</section>
+
+<section class="main">
+
+<!-- IZQUIERDA -->
+<div class="card">
+
+    <div class="input-area">
+        <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png">
+        <div style="width:100%">
+            <p>Ingresa tus latidos por minuto (LPM)</p>
+            <input type="number" id="lpm">
+            <button onclick="evaluar()">Evaluar</button>
+        </div>
+    </div>
+
+    <div id="resultado" class="result"></div>
+
+    <div class="info">
+        <h3>¿Qué son los LPM?</h3>
+        <p>
+            Los latidos por minuto indican cuántas veces tu corazón se contrae en un minuto.
+            Es una forma simple de conocer tu estado físico en ese momento.
+        </p>
+
+        <h3>Valores de referencia</h3>
+        <p>
+            En reposo, lo habitual es entre 60 y 100 LPM. Deportistas pueden tener valores más bajos.
+        </p>
+
+        <h3>Factores que los afectan</h3>
+        <p>
+            Estrés, cafeína, falta de sueño, ejercicio reciente o incluso emociones fuertes
+            pueden elevar tu ritmo cardíaco temporalmente.
+        </p>
+    </div>
+
+    <!-- TUTORIAL -->
+    <div class="tutorial">
+        <h3>¿Cómo medir tus LPM?</h3>
+        <ol>
+            <li>Coloca dos dedos en tu muñeca o cuello (no uses el pulgar).</li>
+            <li>Encuentra el pulso (sentirás pequeños golpes).</li>
+            <li>Cuenta los latidos durante 15 segundos.</li>
+            <li>Multiplica ese número por 4.</li>
+            <li>Ese resultado es tu frecuencia cardíaca (LPM).</li>
+        </ol>
+        <p style="font-size:14px; color:#777;">
+            Consejo: hazlo en reposo para obtener un valor más preciso.
+        </p>
+    </div>
+
+</div>
+
+<!-- DERECHA -->
+<div class="card">
+
+    <div id="guia" class="section">
+        <h3>Tómate un momento</h3>
+
+        <p><strong>Respiración</strong></p>
+        <div class="circle" id="circle"></div>
+        <button onclick="respirar()">Seguir ritmo</button>
+
+        <p><strong>Relaja tus manos</strong></p>
+        <div class="ball"></div>
+        <p style="font-size:14px; color:#777;">
+            Presiona suavemente una bola antiestrés.
+        </p>
+
+        <p><strong>Espera un momento</strong></p>
+        <button onclick="timer()">Iniciar pausa</button>
+        <p id="timerText"></p>
+    </div>
+
+    <div id="final" class="section">
+        <p>
+            Ahora vuelve a medir tus LPM usando el método explicado y compáralos.
+        </p>
+        <button onclick="reiniciar()">Ingresar nuevos datos</button>
+    </div>
+
+</div>
+
+</section>
+
+<footer>
+    Esta herramienta es solo informativa y no reemplaza orientación médica profesional.
+</footer>
+
+<script>
+function evaluar() {
+    const lpm = document.getElementById("lpm").value;
+    const resultado = document.getElementById("resultado");
+    const guia = document.getElementById("guia");
+
+    if (!lpm) {
+        alert("Ingresa un valor válido");
+        return;
+    }
+
+    if (lpm > 100) {
+        resultado.innerHTML = `<span class="red">Frecuencia elevada (${lpm} LPM)</span>`;
+        guia.style.display = "block";
+    } else {
+        resultado.innerHTML = `<span class="green">Dentro de rango (${lpm} LPM)</span>`;
+        guia.style.display = "none";
+    }
+}
+
+function respirar() {
+    const c = document.getElementById("circle");
+    c.classList.add("expand");
+    setTimeout(() => c.classList.remove("expand"), 4000);
+}
+
+function timer() {
+    let t = 10;
+    const text = document.getElementById("timerText");
+    const final = document.getElementById("final");
+
+    text.innerText = `Tiempo: ${t}s`;
+
+    const i = setInterval(() => {
+        t--;
+        text.innerText = `Tiempo: ${t}s`;
+
+        if (t <= 0) {
+            clearInterval(i);
+            final.style.display = "block";
+        }
+    }, 1000);
+}
+
+function reiniciar() {
+    document.getElementById("lpm").value = "";
+    document.getElementById("resultado").innerHTML = "";
+    document.getElementById("guia").style.display = "none";
+    document.getElementById("final").style.display = "none";
+    document.getElementById("timerText").innerText = "";
+}
+</script>
+
+</body>
+</html>
